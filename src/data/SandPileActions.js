@@ -1,11 +1,12 @@
 import SandPileActionTypes from './SandPileActionTypes';
 import SandPileDispatcher from './SandPileDispatcher';
+import {mkEmptyPile} from './SandPile';
 
 const Actions = {
-  initSandPile(sandPile){
+  initSandPile(width, height){
     SandPileDispatcher.dispatch({
       type: SandPileActionTypes.INIT_SANDPILE,
-      sandPile
+      sandPile: mkEmptyPile(width, height)
     });
   },
   addSandPile(sandPile){
