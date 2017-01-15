@@ -5,30 +5,26 @@ export function mkEmptyPile(width, height){
 }
 
 export function mergePiles(p1, p2){
-  return math.add(p1.clone(), p2);
+  const p3 = p1.clone()
+  math.add(p3, p2);
+  return p3;
 }
 
-export function addToPile(pile, x, y, amount){
-  const addPile = mkEmptyPile.apply(null, pile.size());
-  math.subset(addPile, math.index(x, y), amount);
-  return mergePiles(pile, addPile);
+export function addToPile(p1, x, y, amount){
+  const p2 = p1.clone();
+  p2.set([x, y], amount + p1.get([x, y]));
+  return p2
 }
 
-//const white = new Uint8ClampedArray([255, 255, 255]);
-const white = new Uint8ClampedArray([0, 0, 0]);
-const red = new Uint8ClampedArray([255, 0, 0]);
-const green = new Uint8ClampedArray([0, 255, 0]);
-const blue = new Uint8ClampedArray([0, 0, 255]);
 export function sandToColor(c){
   switch(c){
     case 0:
-    return white;
+    return '#FFFFFF';
     case 1:
-    return red;
+    return '#FF0000';
     case 2:
-    return green;
+    return '#00FF00';
     default:
-    console.log('Color for', c);
-    return blue;
+    return '#0000FF';
   }
 }
