@@ -14,9 +14,15 @@ export function addToPile(pile, x, y, amount){
   return mergePiles(pile, addPile);
 }
 
-export function valToColor(v){
+export function sandToColor(v){
   switch(v){
+    case 0:
+    return [255, 255, 255];
+    case 1:
+    return [255, 0, 0];
+    case 2:
+    return [0, 255, 0];
     default:
-    return '';
+    return [0, 0, 255];
   }
 }
