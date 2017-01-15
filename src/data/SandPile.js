@@ -14,15 +14,21 @@ export function addToPile(pile, x, y, amount){
   return mergePiles(pile, addPile);
 }
 
-export function sandToColor(v){
-  switch(v){
+//const white = new Uint8ClampedArray([255, 255, 255]);
+const white = new Uint8ClampedArray([0, 0, 0]);
+const red = new Uint8ClampedArray([255, 0, 0]);
+const green = new Uint8ClampedArray([0, 255, 0]);
+const blue = new Uint8ClampedArray([0, 0, 255]);
+export function sandToColor(c){
+  switch(c){
     case 0:
-    return [255, 255, 255];
+    return white;
     case 1:
-    return [255, 0, 0];
+    return red;
     case 2:
-    return [0, 255, 0];
+    return green;
     default:
-    return [0, 0, 255];
+    console.log('Color for', c);
+    return blue;
   }
 }
