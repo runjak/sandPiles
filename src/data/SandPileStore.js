@@ -1,8 +1,7 @@
 import {ReduceStore} from 'flux/utils';
 import SandPileActionTypes from './SandPileActionTypes';
 import SandPileDispatcher from './SandPileDispatcher';
-import {mkEmptyPile, mergePiles} from './SandPile';
-import math from 'mathjs';
+import {mkEmptyPile, addToPile} from './SandPile';
 
 class SandPileStore extends ReduceStore {
   constructor(){
@@ -18,8 +17,8 @@ class SandPileStore extends ReduceStore {
       case SandPileActionTypes.INIT_SANDPILE:
         return action.sandPile;
 
-      case SandPileActionTypes.ADD_SANDPILE:
-        return mergePiles(state, action.sandPile);
+      case SandPileActionTypes.ADD_SAND_TO_SANDPILE:
+        return addToPile(state, action.x, action.y, action.amount);
 
       default:
         return state;

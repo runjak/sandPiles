@@ -9,10 +9,11 @@ const Actions = {
       sandPile: mkEmptyPile(width, height)
     });
   },
-  addSandPile(sandPile){
+  addRandomSandToSandPile(x, y){
     SandPileDispatcher.dispatch({
-      type: SandPileActionTypes.ADD_SANDPILE,
-      sandPile
+      type: SandPileActionTypes.ADD_SAND_TO_SANDPILE,
+      x, y,
+      amount: Math.floor(Math.random() * 1000)
     });
   }
 };
