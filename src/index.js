@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import './index.css';
+import SandPileContainer from './containers/SandPileContainer';
 
 ReactDOM.render(
-  <App />,
+  <SandPileContainer />,
   document.getElementById('root')
 );
