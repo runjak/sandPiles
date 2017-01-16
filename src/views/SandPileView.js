@@ -6,7 +6,9 @@ import './SandPileView.css';
 class SandPileView extends Component {
   componentDidMount(){
     var canvas = this.refs.canvas;
-    SandPileActions.initSandPile(canvas.scrollWidth, canvas.scrollHeight);
+    canvas.width = canvas.scrollWidth;
+    canvas.height = canvas.scrollHeight;
+    SandPileActions.initSandPile(canvas.width, canvas.height);
   }
 
   componentDidUpdate(){
