@@ -1,19 +1,35 @@
-import math from 'mathjs';
+import {Record, fromJS} from 'immutable';
+
+const SandPileRecord = Record({
+  width: 0,
+  height: 0,
+  data: fromJS([]), // [[Int]]
+  lastChanged: fromJS([]), // [(Int, Int)]
+  isStable: true
+});
+
+class SandPile extends SandPileRecord {
+  addToPile(x, y, amount){
+    const data = this.data.updateIn(
+      [x, y], 0, (sand) => {return sand + amount;});
+    const isStable = this.isStable ? (data.getIn([x, y]) < 4) : false;
+    return this.merge({
+      data, isStable,
+      lastChanged: fromJS([[x, y]]),
+    });
+  }
+}
+
+export default SandPile;
 
 export function mkEmptyPile(width, height){
-  return math.zeros(width, height);
-}
-
-export function mergePiles(p1, p2){
-  const p3 = p1.clone()
-  math.add(p3, p2);
-  return p3;
-}
-
-export function addToPile(p1, x, y, amount){
-  const p2 = p1.clone();
-  p2.set([x, y], amount + p1.get([x, y]));
-  return p2
+  var xs = new Array(width);
+  for(var i = 0; i < xs.length; i++){
+    xs[i] = new Array(height);
+    xs[i].fill(0);
+    xs[i] = fromJS(xs[i]);
+  }
+  return new SandPile({width, height, data: fromJS(xs)});
 }
 
 export function sandToColor(c){
@@ -24,7 +40,9 @@ export function sandToColor(c){
     return '#FF0000';
     case 2:
     return '#00FF00';
-    default:
+    case 3:
     return '#0000FF';
+    default:
+    return '#000000';
   }
 }
