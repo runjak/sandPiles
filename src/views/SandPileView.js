@@ -16,15 +16,17 @@ class SandPileView extends Component {
   }
 
   updateCanvas(){
+    const sandPile = this.props.sandPile;
     const ctx = this.refs.canvas.getContext('2d');
     var lastColor = null;
-    this.props.sandPile.forEach((sand, index) => {
+    sandPile.lastChanged.forEach((index) => {
+      const sand = sandPile.data.getIn(index);
       const color = sandToColor(sand);
       if(color !== lastColor){
         ctx.fillStyle = color;
         lastColor = color;
       }
-      ctx.fillRect(index[0], index[1], 1, 1);
+      ctx.fillRect(index[0], index[1], 5, 5);
     });
   }
 
