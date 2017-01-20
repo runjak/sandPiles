@@ -9,14 +9,25 @@ const SandPileRecord = Record({
 });
 
 class SandPile extends SandPileRecord {
-  addToPile(point, amount){
-    const data = this.data.updateIn(
-      point, 0, (sand) => {return sand + amount;});
-    const lastChanged = this.lastChanged.add(fromJS(point));
+  addMultipleToPile(pointAmountTuples){
+    //pointAmountTuples :: [[point, amount]…]
+    var data = this.data;
+    var lastChanged = this.lastChanged;
+    pointAmountTuples.forEach((pa) => {
+      const point = pa[0];
+      const amount = pa[1];
+      data = data.updateIn(
+        point, 0, (sand) => {return sand + amount;});
+      lastChanged = lastChanged.add(fromJS(point));
+    });
     const isStable = !lastChanged.some((p) => {
       return data.getIn(p) >= 4;
     });
     return this.merge({data, isStable, lastChanged});
+  }
+
+  addToPile(point, amount){
+    return this.addMultipleToPile([[point, amount]]);
   }
 
   stabilize(){
