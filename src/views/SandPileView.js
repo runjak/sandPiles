@@ -26,7 +26,7 @@ class SandPileView extends Component {
         ctx.fillStyle = color;
         lastColor = color;
       }
-      ctx.fillRect(index[0], index[1], 5, 5);
+      ctx.fillRect(index.get(0), index.get(1), 1, 1);
     });
   }
 
