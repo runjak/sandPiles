@@ -22,7 +22,7 @@ it("can correctly add to piles", () => {
      [0,0,0]]);
   expect(pile.lastChanged.toJS()).toEqual([[1, 0]]);
   expect(pile.isStable).toBe(true);
-  pile = pile.addToPile([1, 0], 2).addToPile([0, 1], 3).addToPile([2, 2], 1);
+  pile = pile.addMultipleToPile([[[1, 0], 2], [[0, 1], 3], [[2, 2], 1]]);
   expect(pile.data.toJS()).toEqual(
     [[0,3,0],
      [4,0,0],
@@ -37,3 +37,42 @@ it("can correctly add to piles", () => {
   expect(pile.lastChanged.toJS()).toEqual([[1, 0], [0, 1], [2, 2]]);
   expect(pile.isStable).toBe(true);
 });
+
+it("throws when stabilizing a stable pile", () => {
+  const emptyPile = mkEmptyPile(3, 3);
+  expect(() => {emptyPile.stabilize();}).toThrow();
+});
+
+it("computes neighbours correctly", () => {
+  const emptyPile = mkEmptyPile(3, 3);
+  expect(emptyPile.getNeighbours([0, 0])).toEqual([[0, 1], [1, 0]]);
+  expect(emptyPile.getNeighbours([0, 1])).toEqual([[0, 0], [0, 2], [1, 1]]);
+  expect(emptyPile.getNeighbours([1, 1])).toEqual(
+    [[0, 1], [1, 0], [1, 2], [2, 1]]);
+});
+
+it("stabilizes correctly", () => {
+  var pile = mkEmptyPile(3, 3).addToPile([1, 1], 5);
+  expect(pile.isStable).toBe(false);
+  pile = pile.stabilize();
+  expect(pile.isStable).toBe(true);
+  expect(pile.data.toJS()).toEqual(
+    [[0,1,0],
+     [1,1,1],
+     [0,1,0]]);
+  pile = pile.resetLastChanged().addToPile([1, 0], 2).addToPile([0, 0], 4);
+  expect(pile.lastChanged.toJS()).toEqual([[1, 0], [0, 0]]);
+  expect(pile.isStable).toBe(false);
+  pile = pile.stabilize();
+  expect(pile.isStable).toBe(false);
+  expect(pile.data.toJS()).toEqual(
+    [[0,2,0],
+     [4,1,1],
+     [0,1,0]]);
+  pile = pile.stabilize();
+  expect(pile.isStable).toBe(true);
+  expect(pile.data.toJS()).toEqual(
+    [[1,2,0],
+     [0,2,1],
+     [1,1,0]]);
+})

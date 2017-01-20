@@ -30,7 +30,36 @@ class SandPile extends SandPileRecord {
     return this.addMultipleToPile([[point, amount]]);
   }
 
+  getNeighbours(point){
+    const x = point[0], y = point[1];
+    const width = this.width, height = this.height;
+    return [[x-1, y], [x, y-1], [x, y+1], [x+1, y]].filter((n) => {
+      const nx = n[0], ny = n[1];
+      return nx >= 0 && ny >= 0 && nx < width && ny < height;
+    });
+  }
+
   stabilize(){
+    if(this.isStable){
+      throw new Error("SandPile.stabilize called on a stable sand pile!");
+    }
+    const changes = [];
+    this.lastChanged.toSeq().forEach((point) => {
+      const sand = this.data.getIn(point);
+      if(sand >= 4){
+        const distribute = Math.floor(sand / 4);
+        const keep = sand % 4;
+        changes.push([point, (keep - sand)]);
+        this.getNeighbours(point.toJS()).forEach((n) => {
+          changes.push([n, distribute]);
+        });
+      }
+    });
+    return this.addMultipleToPile(changes);
+  }
+
+  resetLastChanged(){
+    return this.merge({lastChanged: new Set()});
   }
 }
 
