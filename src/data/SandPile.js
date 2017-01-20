@@ -1,10 +1,10 @@
-import {Record, fromJS} from 'immutable';
+import {Record, fromJS, Set, List} from 'immutable';
 
 const SandPileRecord = Record({
   width: 0,
   height: 0,
-  data: fromJS([]), // [[Int]]
-  lastChanged: fromJS([]), // [(Int, Int)]
+  data: List(), // [[Int]]
+  lastChanged: new Set(), // [(Int, Int)]
   isStable: true
 });
 
@@ -12,11 +12,14 @@ class SandPile extends SandPileRecord {
   addToPile(x, y, amount){
     const data = this.data.updateIn(
       [x, y], 0, (sand) => {return sand + amount;});
-    const isStable = this.isStable ? (data.getIn([x, y]) < 4) : false;
-    return this.merge({
-      data, isStable,
-      lastChanged: fromJS([[x, y]]),
+    const lastChanged = this.lastChanged.add(fromJS([x, y]));
+    const isStable = !lastChanged.some((p) => {
+      return data.getIn(p) >= 4;
     });
+    return this.merge({data, isStable, lastChanged});
+  }
+
+  stabilize(){
   }
 }
 
