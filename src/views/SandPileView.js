@@ -38,7 +38,7 @@ class SandPileView extends Component {
       return null;
     })();
     if(nextAction){
-      window.setTimeout(nextAction, 100);
+      window.setTimeout(nextAction, 10);
     }
   }
 
