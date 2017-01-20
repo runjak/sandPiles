@@ -35,7 +35,7 @@ class SandPileView extends Component {
   }
 
   render(){
-    return <canvas className="canvas" ref="canvas" onClick={this.onClick} />;
+    return <canvas className="canvas" ref="canvas" onClick={this.onClick} height="600"/>;
   }
 }
 
