@@ -15,7 +15,17 @@ const Actions = {
       point: [x, y],
       amount: Math.floor(Math.random() * 1000)
     });
-  }
+  },
+  stabilizeSandPile(){
+    SandPileDispatcher.dispatch({
+      type: SandPileActionTypes.STABILIZE_SANDPILE
+    });
+  },
+  stabilizedSandPile(){
+    SandPileDispatcher.dispatch({
+      type: SandPileActionTypes.STABILIZED_SANDPILE
+    });
+  },
 };
 
 export default Actions;

@@ -28,6 +28,18 @@ class SandPileView extends Component {
       }
       ctx.fillRect(index.get(0), index.get(1), 1, 1);
     });
+    const nextAction = (() => {
+      if(!sandPile.isStable){
+        return SandPileActions.stabilizeSandPile;
+      }
+      if(sandPile.lastChanged.length > 0){
+        return SandPileActions.stabilizedSandPile;
+      }
+      return null;
+    })();
+    if(nextAction){
+      window.setTimeout(nextAction, 100);
+    }
   }
 
   onClick(event){
