@@ -18,7 +18,7 @@ class SandPileStore extends ReduceStore {
         return action.sandPile;
 
       case SandPileActionTypes.ADD_SAND_TO_SANDPILE:
-        return state.addToPile(action.x, action.y, action.amount);
+        return state.addToPile(action.point, action.amount);
 
       default:
         return state;

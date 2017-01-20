@@ -12,7 +12,7 @@ const Actions = {
   addRandomSandToSandPile(x, y){
     SandPileDispatcher.dispatch({
       type: SandPileActionTypes.ADD_SAND_TO_SANDPILE,
-      x, y,
+      point: [x, y]
       amount: Math.floor(Math.random() * 1000)
     });
   }

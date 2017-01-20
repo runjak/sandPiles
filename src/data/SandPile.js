@@ -9,10 +9,10 @@ const SandPileRecord = Record({
 });
 
 class SandPile extends SandPileRecord {
-  addToPile(x, y, amount){
+  addToPile(point, amount){
     const data = this.data.updateIn(
-      [x, y], 0, (sand) => {return sand + amount;});
-    const lastChanged = this.lastChanged.add(fromJS([x, y]));
+      point, 0, (sand) => {return sand + amount;});
+    const lastChanged = this.lastChanged.add(fromJS(point));
     const isStable = !lastChanged.some((p) => {
       return data.getIn(p) >= 4;
     });
